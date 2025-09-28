@@ -15,6 +15,11 @@ pub fn factorial(num: u64) -> u64 {
     // For an extra challenge, don't use:
     // - recursion
     // Execute `rustlings hint iterators4` for hints.
+    
+    // let vec: Vec<u64> = (1..=num).into_iter().collect();
+    // let num = vec.iter().product();
+    // num
+    (1..=num).product()
 }
 
 #[cfg(test)]

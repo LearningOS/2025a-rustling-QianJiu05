@@ -35,7 +35,14 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map is a hashmap with String keys and Progress values.
     // map = { "variables1": Complete, "from_str": None, ... }
-    todo!();
+    // let mut ret:usize;
+    match value{
+        Progress:: None => map.values().filter(|&&val| val == Progress::None).count(),
+        Progress:: Some => map.values().filter(|&&val| val == Progress::Some).count(),
+        Progress:: Complete => map.values().filter(|&&val| val == Progress::Complete).count()
+    }
+    // map.values().filter(|&&val| val == Progress).count()
+
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -54,7 +61,15 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     // collection is a slice of hashmaps.
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
-    todo!();
+    let temp =  collection.iter()//用迭代器对collection进行迭代
+                    .flat_map(|map| map.values());//把哈希表展开成迭代器，对它的value进行filter
+
+    match value{
+        Progress:: None => temp.filter(|&&val| val == Progress::None).count(),
+        Progress:: Some => temp.filter(|&&val| val == Progress::Some).count(),
+        Progress:: Complete => temp.filter(|&&val| val == Progress::Complete).count()
+    }
+        // temp.filter(|&&val| val == Progress).count()
 }
 
 #[cfg(test)]
