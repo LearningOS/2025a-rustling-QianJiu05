@@ -41,8 +41,6 @@ fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
         Progress:: Some => map.values().filter(|&&val| val == Progress::Some).count(),
         Progress:: Complete => map.values().filter(|&&val| val == Progress::Complete).count()
     }
-    // map.values().filter(|&&val| val == Progress).count()
-
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -69,7 +67,6 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
         Progress:: Some => temp.filter(|&&val| val == Progress::Some).count(),
         Progress:: Complete => temp.filter(|&&val| val == Progress::Complete).count()
     }
-        // temp.filter(|&&val| val == Progress).count()
 }
 
 #[cfg(test)]
