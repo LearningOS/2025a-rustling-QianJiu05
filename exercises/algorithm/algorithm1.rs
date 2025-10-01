@@ -70,13 +70,48 @@ impl<T> LinkedList<T> {
         }
     }
 	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
+    where
+        T: Ord + Clone,
 	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+        if list_a.start.is_none() {
+            return list_b;
         }
+        if list_b.start.is_none() {
+            return list_a;
+        }
+
+        let mut merged = LinkedList::new();
+
+        let mut current_a = list_a.start;
+        let mut current_b = list_b.start;
+
+        while let (Some(node_a), Some(node_b)) = (current_a, current_b) {
+            unsafe {
+                let val_a = &(*node_a.as_ptr()).val;
+                let val_b = &(*node_b.as_ptr()).val;
+                
+                if val_a <= val_b {
+                    merged.add(val_a.clone());
+                    current_a = (*node_a.as_ptr()).next;
+                } else {
+                    merged.add(val_b.clone());
+                    current_b = (*node_b.as_ptr()).next;
+                }
+            }
+        }
+        while let Some(node) = current_a {
+            unsafe {
+                merged.add((*node.as_ptr()).val.clone());
+                current_a = (*node.as_ptr()).next;
+            }
+        }
+        while let Some(node) = current_b {
+            unsafe {
+                merged.add((*node.as_ptr()).val.clone());
+                current_b = (*node.as_ptr()).next;
+            }
+        }
+        merged
 	}
 }
 
