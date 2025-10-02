@@ -5,9 +5,26 @@
 */
 // I AM NOT DONE
 
-fn sort<T>(array: &mut [T]){
+fn sort<T>(array: &mut [T])
+where
+    T: PartialOrd,
+{
+    let len = array.len() - 1;
+    if len <= 1 {return;}
 	//TODO
+    let mut i = len;
+    while i > 0{
+        for j in 0..i{
+            if array[j] > array[j+1]{
+                array.swap(j,j+1);
+            }
+        }
+        i -= 1;
+    }
+
 }
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
