@@ -19,11 +19,13 @@ mod tests {
 
     #[test]
     fn is_true_when_even() {
-        assert!();
+        let res = is_even(6);//even:not 5
+        assert!(res);
     }
 
     #[test]
     fn is_false_when_odd() {
-        assert!();
+        let res = is_even(5);
+        assert!(!res);
     }
 }
