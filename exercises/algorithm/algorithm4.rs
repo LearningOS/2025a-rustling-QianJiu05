@@ -50,13 +50,18 @@ where
 
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
-        //TODO
+        match &mut self.root {
+            Some(ref mut node) => node.insert(value),
+            None => self.root = Some(Box::new(TreeNode::new(value))),
+        }
     }
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
-        //TODO
-        true
+        match &self.root {
+            Some(node) => node.search(&value),
+            None => false,
+        }
     }
 }
 
@@ -66,7 +71,39 @@ where
 {
     // Insert a node into the tree
     fn insert(&mut self, value: T) {
-        //TODO
+        match value.cmp(&self.value) {
+            Ordering::Equal => return, // 值已存在，不插入
+            Ordering::Less => {
+                match &mut self.left {
+                    Some(ref mut left_node) => left_node.insert(value),
+                    None => self.left = Some(Box::new(TreeNode::new(value))),
+                }
+            },
+            Ordering::Greater => {
+                match &mut self.right {
+                    Some(ref mut right_node) => right_node.insert(value),
+                    None => self.right = Some(Box::new(TreeNode::new(value))),
+                }
+            },
+        }
+    }
+
+    fn search(&self, value: &T) -> bool {
+        match value.cmp(&self.value) {
+            Ordering::Equal => true,
+            Ordering::Less => {
+                match &self.left {
+                    Some(left_node) => left_node.search(value),
+                    None => false,
+                }
+            },
+            Ordering::Greater => {
+                match &self.right {
+                    Some(right_node) => right_node.search(value),
+                    None => false,
+                }
+            },
+        }
     }
 }
 

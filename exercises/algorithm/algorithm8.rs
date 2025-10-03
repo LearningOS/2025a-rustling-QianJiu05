@@ -67,15 +67,35 @@ impl<T> myStack<T> {
         }
     }
     pub fn push(&mut self, elem: T) {
-        //TODO
+        if !self.q1.is_empty() {//只有在q1非空的情况下压栈q1，不然都压栈q2
+            self.q1.enqueue(elem);
+        } else {
+            self.q2.enqueue(elem);
+        }
     }
     pub fn pop(&mut self) -> Result<T, &str> {
-        //TODO
-		Err("Stack is empty")
+        if self.is_empty() {
+            return Err("Stack is empty");
+        }
+        let (full, empty) = if !self.q1.is_empty() {
+            (&mut self.q1, &mut self.q2)
+        } else {
+            (&mut self.q2, &mut self.q1)
+        };
+
+
+        while full.size() > 1 {
+            if let Ok(val) = full.dequeue() {
+                empty.enqueue(val);
+            }
+        }//这里把所有的val都移到另一个队列，然后再把另一个队列的顶点出栈，模仿FILO的栈特性
+        full.dequeue()
+
+
+
     }
     pub fn is_empty(&self) -> bool {
-		//TODO
-        true
+		self.q1.is_empty() && self.q2.is_empty()
     }
 }
 
